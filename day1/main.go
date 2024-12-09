@@ -25,8 +25,21 @@ func main() {
 		sum_of_difference += math.Abs(float64(list1[i]) - float64(list2[i]))
 	}
 
-    fmt.Printf("Sum of difference: %f\n", sum_of_difference)
+	fmt.Printf("Sum of difference: %f\n", sum_of_difference)
 
+	m := make(map[int]int)
+
+	for _, val := range list2 {
+		m[val]++
+	}
+
+	var similarity_score int
+
+	for _, val := range list1 {
+		similarity_score += val * m[val]
+	}
+
+	fmt.Printf("Similarity score: %d\n", similarity_score)
 }
 
 func readListsFromFile(filename string) ([]int, []int, error) {
