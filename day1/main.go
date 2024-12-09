@@ -1,7 +1,58 @@
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"sort"
+	"strconv"
+	"strings"
+)
 
 func main() {
-    fmt.Println("hoi")
+	list1, list2, err := readListsFromFile("data/day_1_1.txt")
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+
+
+	sort.Ints(list1)
+	sort.Ints(list2)
+
+	fmt.Println("List 1:", list1)
+	fmt.Println("List 2:", list2)
 }
+
+func readListsFromFile(filename string) ([]int, []int, error) {
+	file, err := os.Open(filename)
+	if err != nil {
+		return nil, nil, fmt.Errorf("failed to open file: %w", err)
+	}
+	defer file.Close()
+
+	var list1, list2 []int
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		line := scanner.Text()
+		parts := strings.Split(line, "   ")
+		if len(parts) == 2 {
+			val1, err1 := strconv.Atoi(parts[0])
+			val2, err2 := strconv.Atoi(parts[1])
+			if err1 != nil || err2 != nil {
+				return nil, nil, fmt.Errorf("failed to parse integers: %s", line)
+			}
+			list1 = append(list1, val1)
+			list2 = append(list2, val2)
+		} else {
+			fmt.Println("Line format incorrect:", line)
+		}
+	}
+
+	if err := scanner.Err(); err != nil {
+		return nil, nil, fmt.Errorf("error reading file: %w", err)
+	}
+
+	return list1, list2, nil
+}
+
