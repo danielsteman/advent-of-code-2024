@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"math"
 	"os"
 	"sort"
 	"strconv"
@@ -16,12 +17,16 @@ func main() {
 		return
 	}
 
-
 	sort.Ints(list1)
 	sort.Ints(list2)
 
-	fmt.Println("List 1:", list1)
-	fmt.Println("List 2:", list2)
+	var sum_of_difference float64
+	for i := 0; i < len(list1); i++ {
+		sum_of_difference += math.Abs(float64(list1[i]) - float64(list2[i]))
+	}
+
+    fmt.Printf("Sum of difference: %f\n", sum_of_difference)
+
 }
 
 func readListsFromFile(filename string) ([]int, []int, error) {
