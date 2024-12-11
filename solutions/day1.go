@@ -73,4 +73,3 @@ func readListsFromFile(filename string) ([]int, []int, error) {
 
 	return list1, list2, nil
 }
-
