@@ -1,4 +1,4 @@
-package main
+package solutions
 
 import (
 	"bufio"
@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-func main() {
+func SolveDay1() {
 	list1, list2, err := readListsFromFile("data/day_1_1.txt")
 	if err != nil {
 		fmt.Println("Error:", err)
