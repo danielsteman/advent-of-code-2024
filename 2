@@ -5,7 +5,6 @@ import (
 	"io"
 	"os"
 	"regexp"
-	"strconv"
 )
 
 func readStringFromFile(filename string) (string, error) {
@@ -35,27 +34,8 @@ func SolveDay3() (int, error) {
 	pattern := `mul\((\d+),(\d+)\)`
 	re := regexp.MustCompile(pattern)
 
-	matches := re.FindAllStringSubmatch(memory, -1)
-	sum := 0
+    matches := re.FindAllStringSubmatch(text, -1)
 
-	for _, match := range matches {
-		fmt.Println("Full match:", match[0])
-		fmt.Println("First number:", match[1])
-		fmt.Println("Second number:", match[2])
-
-		first_int, err := strconv.Atoi(match[1])
-		if err != nil {
-			panic(err)
-		}
-
-		second_int, err := strconv.Atoi(match[2])
-		if err != nil {
-			panic(err)
-		}
-
-		sum += first_int * second_int
-	}
-
-	return sum, nil
+	return 1, nil
 
 }

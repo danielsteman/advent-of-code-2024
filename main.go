@@ -1,7 +1,16 @@
 package main
 
-import "aoc2024/solutions"
+import (
+	"aoc2024/solutions"
+	"fmt"
+)
 
 func main() {
-	solutions.SolveDay1()
+	solution, err := solutions.SolveDay3()
+	if err != nil {
+		fmt.Println("Error:", err)
+        return
+	}
+
+    fmt.Println(solution)
 }
