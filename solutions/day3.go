@@ -32,28 +32,38 @@ func SolveDay3() (int, error) {
 	fmt.Printf("File content length: %d\n", len(memory))
 	fmt.Println(memory)
 
-	pattern := `mul\((\d+),(\d+)\)`
+	pattern := `mul\((\d+),(\d+)\)|do\(\)|don'?t\(\)`
 	re := regexp.MustCompile(pattern)
 
 	matches := re.FindAllStringSubmatch(memory, -1)
 	sum := 0
+	condition := true
 
 	for _, match := range matches {
-		fmt.Println("Full match:", match[0])
-		fmt.Println("First number:", match[1])
-		fmt.Println("Second number:", match[2])
+		if match[1] != "" && match[2] != "" { // Matches mul(x, y)
+			fmt.Println("Matched mul:")
+			fmt.Println("  First number:", match[1])
+			fmt.Println("  Second number:", match[2])
 
-		first_int, err := strconv.Atoi(match[1])
-		if err != nil {
-			panic(err)
+			first_int, err := strconv.Atoi(match[1])
+			if err != nil {
+				panic(err)
+			}
+
+			second_int, err := strconv.Atoi(match[2])
+			if err != nil {
+				panic(err)
+			}
+			if condition {
+				sum += first_int * second_int
+			}
+		} else if match[0] == "do()" {
+			fmt.Println("Matched do()")
+			condition = true
+		} else if match[0] == "don't()" || match[0] == "dont()" {
+			fmt.Println("Matched don't()")
+			condition = false
 		}
-
-		second_int, err := strconv.Atoi(match[2])
-		if err != nil {
-			panic(err)
-		}
-
-		sum += first_int * second_int
 	}
 
 	return sum, nil
